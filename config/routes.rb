@@ -3,12 +3,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :banks, only: [] do
         resources :users, only: %i[index] do
-          resources :cards, only: %i[index] do
-            post "send_money", to: "cards#send_money" #надо будет убрать
-          end
+          resources :cards, only: %i[index]
         end
       end
-      resources :cards
+      resources :cards, only: [] do 
+        post :withdrawal_from_my_card
+        post :replenishment_my_card
+        post :send_money_by_card
+        post :send_money_by_phone
+      end
     end
   end
 end
