@@ -1,5 +1,4 @@
 class Api::V1::CardsController < ApplicationController
-
   def withdrawal_from_my_card
     if card.balance >= params[:amount]
       withdrawal
@@ -12,7 +11,7 @@ class Api::V1::CardsController < ApplicationController
 
   def replenishment_my_card
     replenishment(card)
-    
+
     head :ok
   end
 
@@ -25,7 +24,7 @@ class Api::V1::CardsController < ApplicationController
   def send_money_by_phone
     user = User.find_by(phone: params[:user_phone])
     card_to = user.cards.first # TODO: add default card of sbp
-    
+
     send_money(card_to)
   end
 
