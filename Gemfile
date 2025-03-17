@@ -14,9 +14,15 @@ gem "faker"
 
 gem "blueprinter"
 
-gem "pry-rails"
-
 gem "rubocop-rails"
+
+gem "dry-initializer"
+
+gem "dry-types"
+
+gem "dry-struct"
+
+gem "pry-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"

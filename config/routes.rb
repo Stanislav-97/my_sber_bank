@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
   namespace :api do 
     namespace :v1 do
-      resources :banks, only: [] do
-        resources :users, only: %i[index] do
-          resources :cards, only: %i[index]
-        end
+      resources :users, only: %i[index] do
+        resources :cards, only: %i[index], controller: "users/cards"
       end
+
       resources :cards, only: [] do 
         post :withdrawal_from_my_card
         post :replenishment_my_card

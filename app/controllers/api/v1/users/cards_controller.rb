@@ -1,4 +1,4 @@
-class Api::V1::Banks::Users::CardsController < ApplicationController
+class Api::V1::Users::CardsController < ApplicationController
   def index
     render json: { data: CardBlueprint.render_as_hash(cards) }
   end

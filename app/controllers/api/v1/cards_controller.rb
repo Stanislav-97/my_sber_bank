@@ -1,8 +1,6 @@
 class Api::V1::CardsController < ApplicationController
   def withdrawal_from_my_card
-    if card.balance >= params[:amount]
-      withdrawal
-
+    if Cards::Withdrawal.call(card: card, amount: params[:amount])
       head :ok
     else
       render json: { error: "Не хватает средств" }, status: 422
@@ -10,8 +8,7 @@ class Api::V1::CardsController < ApplicationController
   end
 
   def replenishment_my_card
-    replenishment(card)
-
+    Cards::Replenishment.call(card: card, amount: params[:amount])
     head :ok
   end
 
@@ -31,26 +28,11 @@ class Api::V1::CardsController < ApplicationController
   private
 
   def send_money(card_to)
-    if card.balance >= params[:amount]
-      Card.transaction do
-        withdrawal
-        replenishment(card_to)
-      end
-
+    if Cards::Send.call(card_from: card, card_to: card_to, amount: params[:amount])
       head :ok
     else
       render json: { error: "Не хватает средств" }, status: 422
     end
-  end
-
-  def withdrawal
-    card.balance -= params[:amount]
-    card.save
-  end
-
-  def replenishment(card_to)
-    card_to.balance += params[:amount]
-    card_to.save
   end
 
   def card
